@@ -1,0 +1,10 @@
+
+Requirements:
+Download MicroPython modules
+We will need three files to easily read data from the Distance Sensor:
+
+Download the PiicoDev Unified Library: PiicoDev_Unified.py (right-click, "save link as").
+Download the device module: PiicoDev_VL53L1X.py (right-click, "save link as")
+Download the example script: main.py (right-click, "save link as")
+It will be best to keep these files wherever you like to keep your coding projects eg. Documents > PiicoDev
+
