@@ -23,6 +23,10 @@ class LIS3DH:
         if y > 32767: y -= 65536
         if z > 32767: z -= 65536
 
+        x_offset, y_offset, z_offset = 0, 0, 16384  # 示例值，根据量程调整
+        x = x - x_offset
+        y = y - y_offset
+        z = z - z_offset
         return x, y, z
 
     def calculate_total_acceleration(self, x, y, z):

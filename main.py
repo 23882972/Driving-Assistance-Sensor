@@ -29,7 +29,7 @@ def initialize_csv_file():
 def initialize_alert_log():
     with open("alert_log.csv", mode="w", newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["Timestamp", "Alert_Reason"])
+        writer.writerow(["Timestamp", "Code", "Alert_Reason"])
 
 
 def save_data_to_csv(timestamp, x, y, z, total_accel, distance):
@@ -38,10 +38,10 @@ def save_data_to_csv(timestamp, x, y, z, total_accel, distance):
         writer.writerow([timestamp, x, y, z, total_accel, distance])
 
 
-def save_alert_log(timestamp, reason):
+def save_alert_log(timestamp, code, reason):
     with open("alert_log.csv", mode="a", newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([timestamp, reason])
+        writer.writerow([timestamp, code, reason])
 
 
 # 蜂鸣器警报
