@@ -1,9 +1,7 @@
 import math
-import smbus
-
+import smbus2 as smbus
 
 # Accelerometer LIS3DH sensor
-
 class LIS3DH:
     def __init__(self, address=0x2b, bus_num=1):
         self.address = address
@@ -23,7 +21,7 @@ class LIS3DH:
         if y > 32767: y -= 65536
         if z > 32767: z -= 65536
 
-        x_offset, y_offset, z_offset = 0, 0, 16384  # 示例值，根据量程调整
+        x_offset, y_offset, z_offset = 0, 0, 16384  # 示例值，根据量程调整 / Example values, adjust according to the range
         x = x - x_offset
         y = y - y_offset
         z = z - z_offset
