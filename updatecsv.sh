@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.bashrc
+. ~/.bashrc
 
 cd ~/Desktop/iot/Driving-Assistance-Sensor
 
