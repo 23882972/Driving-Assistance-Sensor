@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/.bashrc
+
 cd ~/Desktop/iot/Driving-Assistance-Sensor
 
 git add ~/Desktop/iot/Driving-Assistance-Sensor/sensor_data.csv
