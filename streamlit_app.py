@@ -25,9 +25,13 @@ df = read_web_csv()
 if df is not None:
     # Show the data in the app
     st.write("Data Overview:")
+    # First 6 rows with headers
     st.write(df.head())
+    # Select menu for image of the driver
     selected_image = st.selectbox('Select a time of an image:', df['Timestamp'])
     image_path = f'https://raw.githubusercontent.com/23882972/Driving-Assistance-Sensor/main/photos/{selected_image}.jpg'
     st.image(image_path, caption="Image of the driver during the buzzer", use_column_width=True)
-    
+    # First line graph of time against acceleration
+    fig = px.line(df, x='Timestamp', y='Total_Acceleration', title='Line Graph of Time against Acceleration of buzzer')
+    st.plotly_chart(fig)
     
