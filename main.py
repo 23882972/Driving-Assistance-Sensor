@@ -49,7 +49,7 @@ try:
         distance = distance_sensor.read_distance()
 
         # 获取当前时间 / Get current timestamp
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         # 打印数据到控制台 / Print data to console
         file_logger.save_data(timestamp, x, y, z, total_accel, distance)

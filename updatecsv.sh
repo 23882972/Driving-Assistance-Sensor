@@ -6,4 +6,4 @@ git add ~/Desktop/iot/Driving-Assistance-Sensor/sensor_data.csv
 
 git commit -m "Auto-push: $(date '+%Y-%m-%d %H:%M:%S')"
 
-git push https://@MYTOKEN@github.com/23882972/Driving-Assistance-Sensor.git
+git push https://$MYTOKEN@github.com/23882972/Driving-Assistance-Sensor.git
