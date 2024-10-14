@@ -7,6 +7,7 @@ from camera_module import CameraModule
 from file_logger import FileLogger
 from git_handler import GitHandler  # 导入 GitHandler 类
 import RPi.GPIO as GPIO
+import subprocess
 
 # 初始化传感器 / Initialize sensors
 accelerometer = LIS3DH()
@@ -30,6 +31,12 @@ git_handler = GitHandler()
 save_interval = 5  # 每 5 秒保存一次数据 / Save data every 5 seconds
 last_saved_time = 0
 alert_times = []  # 记录触发警报的时间 / Record the time when alerts were triggered
+
+# Auto-push script function
+def run_script():
+    while True:
+	subprocess.run(["~/Desktop/iot/Driving-Assistance-Sensor/updatecsv.sh"])
+	time.sleep(60)
 
 # 主循环，读取数据并保存 / Main loop to read data and save
 try:
@@ -82,6 +89,8 @@ try:
 
         # 等待下一次循环 / Wait for next iteration
         time.sleep(0.5)
+        
+        run_script()
 
 finally:
     buzz.buzzer_off()  # 关闭蜂鸣器 / Turn off the buzzer
