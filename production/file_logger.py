@@ -1,4 +1,5 @@
 from datetime import datetime
+import csv
 
 class FileLogger:
     def __init__(self, data_format='txt'):

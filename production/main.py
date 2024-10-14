@@ -21,11 +21,11 @@ TIME_WINDOW = 3  # 时间窗口长度 (秒) / Time window length (seconds)
 MAX_ALERTS_IN_WINDOW = 3  # 时间窗口内的最大报警次数 / Maximum number of alerts in the time window
 
 # 初始化文件记录器 / Initialize file logger
-file_logger = FileLogger(data_format='txt')
+file_logger = FileLogger(data_format='csv')
 
 # 初始化 Git 处理器 / Initialize Git handler
 git_handler = GitHandler()
-
+        
 # 设置参数 / Set parameters
 save_interval = 5  # 每 5 秒保存一次数据 / Save data every 5 seconds
 last_saved_time = 0
