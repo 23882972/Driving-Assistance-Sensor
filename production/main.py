@@ -5,6 +5,7 @@ from vl53l1x_sensor import VL53L1X
 from buzzer import BUZZER
 from camera_module import CameraModule
 from file_logger import FileLogger
+from git_handler import GitHandler  # 导入 GitHandler 类
 import RPi.GPIO as GPIO
 
 # 初始化传感器 / Initialize sensors
@@ -21,6 +22,9 @@ MAX_ALERTS_IN_WINDOW = 3  # 时间窗口内的最大报警次数 / Maximum numbe
 
 # 初始化文件记录器 / Initialize file logger
 file_logger = FileLogger(data_format='txt')
+
+# 初始化 Git 处理器 / Initialize Git handler
+git_handler = GitHandler()
 
 # 设置参数 / Set parameters
 save_interval = 5  # 每 5 秒保存一次数据 / Save data every 5 seconds
@@ -73,8 +77,12 @@ try:
                 buzz.buzz_three_times()  # 蜂鸣器鸣叫三次 / Buzzer buzzes three times
 
 
+        # 每隔 10 秒执行 Git 提交和推送 / Commit and push to Git every 10 seconds
+        git_handler.commit_and_push()
+
         # 等待下一次循环 / Wait for next iteration
         time.sleep(0.5)
 
 finally:
+    buzz.buzzer_off()  # 关闭蜂鸣器 / Turn off the buzzer
     GPIO.cleanup()  # 清理 GPIO 引脚设置 / Clean up GPIO pin settings
