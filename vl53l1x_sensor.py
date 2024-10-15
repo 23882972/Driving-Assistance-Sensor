@@ -10,7 +10,8 @@ class VL53L1X:
     def initialize_sensor(self):
         # 初始化命令序列：设定 VL53L1X 的默认配置 / Initialization command sequence: Set the default configuration of VL53L1X
         self.bus.write_byte_data(self.address, 0x00, 0x01)  # 示例：写入启动命令
-
+        time.sleep(0.1)
+	
     def read_distance(self):
         # 读取距离数据 / Read distance data
         # 获取2个字节的数据 / Get 2 bytes of data

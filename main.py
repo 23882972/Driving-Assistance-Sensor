@@ -8,16 +8,20 @@ from file_logger import FileLogger
 from git_handler import GitHandler  # 导入 GitHandler 类
 import RPi.GPIO as GPIO
 import subprocess
+from PiicoDev_LIS3DH import PiicoDev_LIS3DH
+from PiicoDev_VL53L1X import PiicoDev_VL53L1X
 
 # 初始化传感器 / Initialize sensors
+motion = PiicoDev_LIS3DH()
+motion.range = 2
 accelerometer = LIS3DH()
-distance_sensor = VL53L1X()
+distance_sensor = PiicoDev_VL53L1X()
 buzz = BUZZER()
 camera = CameraModule()
 
 # 定义阈值和时间窗口参数 / Define threshold and time window parameters
-ACCELERATION_THRESHOLD = 3000  # 加速度阈值/ Acceleration threshold
-DISTANCE_THRESHOLD = 50  # 距离阈值 (毫米)/ Distance threshold (mm)
+ACCELERATION_THRESHOLD = 10  # 加速度阈值/ Acceleration threshold
+DISTANCE_THRESHOLD = 200  # 距离阈值 (毫米)/ Distance threshold (mm)
 TIME_WINDOW = 3  # 时间窗口长度 (秒) / Time window length (seconds)
 MAX_ALERTS_IN_WINDOW = 3  # 时间窗口内的最大报警次数 / Maximum number of alerts in the time window
 
@@ -37,11 +41,12 @@ alert_times = []  # 记录触发警报的时间 / Record the time when alerts we
 try:
     while True:
         # 读取加速度数据 / Read accelerometer data
-        x, y, z = accelerometer.read_acceleration()
+        x, y, z = motion.acceleration
+
         total_accel = accelerometer.calculate_total_acceleration(x, y, z)
 
         # 读取距离传感器数据 / Read distance sensor data
-        distance = distance_sensor.read_distance()
+        distance = distance_sensor.read()
 
         # 获取当前时间 / Get current timestamp
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
