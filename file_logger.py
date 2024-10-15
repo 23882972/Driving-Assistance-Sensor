@@ -4,8 +4,8 @@ import csv
 class FileLogger:
     def __init__(self, data_format='txt'):
         self.data_format = data_format
-        self.data_file = "sensor_data." + data_format
-        self.alert_log_file = "alert_log." + data_format
+        self.data_file = "/home/csseiot/final/Driving-Assistance-Sensor/sensor_data." + data_format
+        self.alert_log_file = "/home/csseiot/final/Driving-Assistance-Sensor/alert_log." + data_format
         self.data_writer = None
         self.alert_writer = None
         self.open_files()

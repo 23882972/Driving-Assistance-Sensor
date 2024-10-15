@@ -3,7 +3,7 @@ from datetime import datetime
 import os
 
 class CameraModule:
-    def __init__(self, folder="photos"):
+    def __init__(self, folder="/home/csseiot/final/Driving-Assistance-Sensor/photos"):
         self.folder = folder
         os.makedirs(self.folder, exist_ok=True)  # 创建存储文件夹（如不存在）/ Create storage folder if it doesn't exist
         self.camera = Picamera2()  # 初始化摄像头 / Initialize the camera
