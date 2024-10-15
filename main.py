@@ -17,7 +17,7 @@ camera = CameraModule()
 
 # 定义阈值和时间窗口参数 / Define threshold and time window parameters
 ACCELERATION_THRESHOLD = 3000  # 加速度阈值/ Acceleration threshold
-DISTANCE_THRESHOLD = 100  # 距离阈值 (毫米)/ Distance threshold (mm)
+DISTANCE_THRESHOLD = 50  # 距离阈值 (毫米)/ Distance threshold (mm)
 TIME_WINDOW = 3  # 时间窗口长度 (秒) / Time window length (seconds)
 MAX_ALERTS_IN_WINDOW = 3  # 时间窗口内的最大报警次数 / Maximum number of alerts in the time window
 
