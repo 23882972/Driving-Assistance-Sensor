@@ -1,8 +1,8 @@
 #!/bin/bash
 
-cd ~/Desktop/iot/Driving-Assistance-Sensor
+cd /home/csseiot/final/Driving-Assistance-Sensor
 
-git add ~/Desktop/iot/Driving-Assistance-Sensor/sensor_data.csv ~/Desktop/iot/Driving-Assistance-Sensor/photos/
+git add /home/csseiot/final/Driving-Assistance-Sensor/sensor_data.csv /home/csseiot/final/Driving-Assistance-Sensor/photos/ /home/csseiot/final/Driving-Assistance-Sensor/alert_log.csv
 
 git commit -m "Auto-push: $(date '+%Y-%m-%d %H:%M:%S')"
 

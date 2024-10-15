@@ -32,14 +32,6 @@ save_interval = 5  # 每 5 秒保存一次数据 / Save data every 5 seconds
 last_saved_time = 0
 alert_times = []  # 记录触发警报的时间 / Record the time when alerts were triggered
 
-# Auto-push script function
-def run_script():
-    while True:
-    subprocess.run(["~/Desktop/iot/Driving-Assistance-Sensor/updatecsv.sh"])
-    time.sleep(60)
-
-# Start auto-push script
-run_script()
 
 # 主循环，读取数据并保存 / Main loop to read data and save
 try:
@@ -85,10 +77,6 @@ try:
             if len(alert_times) >= MAX_ALERTS_IN_WINDOW:
                 print("Buzzer Triggered!")
                 buzz.buzz_three_times()  # 蜂鸣器鸣叫三次 / Buzzer buzzes three times
-
-
-        # 每隔 10 秒执行 Git 提交和推送 / Commit and push to Git every 10 seconds
-        git_handler.commit_and_push()
 
         # 等待下一次循环 / Wait for next iteration
         time.sleep(0.5)
