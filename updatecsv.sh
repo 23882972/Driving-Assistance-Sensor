@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /home/csseiot/.bashrc
+
 cd /home/csseiot/final/Driving-Assistance-Sensor
 
 git add /home/csseiot/final/Driving-Assistance-Sensor/sensor_data.csv /home/csseiot/final/Driving-Assistance-Sensor/photos/ /home/csseiot/final/Driving-Assistance-Sensor/alert_log.csv
