@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/csseiot/.bashrc
+. /home/csseiot/.bashrc
 
 cd /home/csseiot/final/Driving-Assistance-Sensor
 
