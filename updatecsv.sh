@@ -2,7 +2,7 @@
 
 cd ~/Desktop/iot/Driving-Assistance-Sensor
 
-git add ~/Desktop/iot/Driving-Assistance-Sensor/sensor_data.csv
+git add ~/Desktop/iot/Driving-Assistance-Sensor/sensor_data.csv ~/Desktop/iot/Driving-Assistance-Sensor/photos/
 
 git commit -m "Auto-push: $(date '+%Y-%m-%d %H:%M:%S')"
 
