@@ -19,18 +19,18 @@ class FileLogger:
 
             # Write headers if the file is empty
             if self.data_file_handle.tell() == 0:
-                self.data_writer.writerow(["Timestamp", "X_Axis", "Y_Axis", "Z_Axis", "Total_Acceleration", "Distance"])
+                self.data_writer.writerow(["Timestamp", "X_Axis", "Y_Axis", "Z_Axis", "Total_Acceleration", "Distance", "Is_Raining"])
             if self.alert_log_file_handle.tell() == 0:
                 self.alert_writer.writerow(["Timestamp", "Code", "Alert_Reason"])
         elif self.data_format == 'txt':
             self.data_file_handle = open(self.data_file, mode="a")
             self.alert_log_file_handle = open(self.alert_log_file, mode="a")
 
-    def save_data(self, timestamp, x, y, z, total_accel, distance):
+    def save_data(self, timestamp, x, y, z, total_accel, distance, is_raining):
         if self.data_format == 'csv':
-            self.data_writer.writerow([timestamp, x, y, z, total_accel, distance])
+            self.data_writer.writerow([timestamp, x, y, z, total_accel, distance, is_raining])
         elif self.data_format == 'txt':
-            self.data_file_handle.write(f"{timestamp}\t{x}\t{y}\t{z}\t{total_accel}\t{distance}\n")
+            self.data_file_handle.write(f"{timestamp}\t{x}\t{y}\t{z}\t{total_accel}\t{distance}\t{is_raining}\n")
         self.data_file_handle.flush()  # 确保数据及时写入文件
 
     def save_alert_log(self, timestamp, code, reason):

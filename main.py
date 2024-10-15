@@ -32,6 +32,11 @@ save_interval = 5  # 每 5 秒保存一次数据 / Save data every 5 seconds
 last_saved_time = 0
 alert_times = []  # 记录触发警报的时间 / Record the time when alerts were triggered
 
+# Auto-push script function
+def run_script():
+    while True:
+    subprocess.run(["~/Desktop/iot/Driving-Assistance-Sensor/updatecsv.sh"])
+    time.sleep(60)
 
 # Start auto-push script
 run_script()
@@ -50,7 +55,7 @@ try:
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
         # 打印数据到控制台 / Print data to console
-        file_logger.save_data(timestamp, x, y, z, total_accel, distance)
+        file_logger.save_data(timestamp, x, y, z, total_accel, distance, 'false')
         print(f"Time: {timestamp}, X: {x}, Y: {y}, Z: {z}, "
               f"Total Accel: {total_accel:.2f}, Distance: {distance}")
 
@@ -93,8 +98,4 @@ finally:
     buzz.buzzer_off()  # 关闭蜂鸣器 / Turn off the buzzer
     GPIO.cleanup()  # 清理 GPIO 引脚设置 / Clean up GPIO pin settings
 
-# Auto-push script function
-def run_script():
-    while True:
-	subprocess.run(["~/Desktop/iot/Driving-Assistance-Sensor/updatecsv.sh"])
-	time.sleep(60)
+
