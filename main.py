@@ -5,58 +5,55 @@ from vl53l1x_sensor import VL53L1X
 from buzzer import BUZZER
 from camera_module import CameraModule
 from file_logger import FileLogger
-from git_handler import GitHandler  # 导入 GitHandler 类
 import RPi.GPIO as GPIO
 import subprocess
 from PiicoDev_LIS3DH import PiicoDev_LIS3DH
 from PiicoDev_VL53L1X import PiicoDev_VL53L1X
 
-# 初始化传感器 / Initialize sensors
-motion = PiicoDev_LIS3DH()
+# Initializing instances
+motion = PiicoDev_LIS3DH() # Instance to read the accelerometer
 motion.range = 2
-accelerometer = LIS3DH()
-distance_sensor = PiicoDev_VL53L1X()
-buzz = BUZZER()
-camera = CameraModule()
+accelerometer = LIS3DH() # Instance to calculate the total acceleration
+distance_sensor = PiicoDev_VL53L1X() # Instance to read the distance sensor
+buzz = BUZZER() # Instance for buzzer
+camera = CameraModule() # Instance for camera
 
-# 定义阈值和时间窗口参数 / Define threshold and time window parameters
-ACCELERATION_THRESHOLD = 10  # 加速度阈值/ Acceleration threshold
-DISTANCE_THRESHOLD = 200  # 距离阈值 (毫米)/ Distance threshold (mm)
-TIME_WINDOW = 3  # 时间窗口长度 (秒) / Time window length (seconds)
-MAX_ALERTS_IN_WINDOW = 3  # 时间窗口内的最大报警次数 / Maximum number of alerts in the time window
+# Defining thresholds and time window parameters
+ACCELERATION_THRESHOLD = 10
+DISTANCE_THRESHOLD = 200
+TIME_WINDOW = 3
+MAX_ALERTS_IN_WINDOW = 3
 
-# 初始化文件记录器 / Initialize file logger
+# Initializing file logger
 file_logger = FileLogger(data_format='csv')
-
-# 初始化 Git 处理器 / Initialize Git handler
-git_handler = GitHandler()
         
-# 设置参数 / Set parameters
-save_interval = 5  # 每 5 秒保存一次数据 / Save data every 5 seconds
+# Setting parameters
+save_interval = 5  # Saving data every 5 seconds
 last_saved_time = 0
-alert_times = []  # 记录触发警报的时间 / Record the time when alerts were triggered
+alert_times = []  # Recording the time when alerts were triggered
 
 
-# 主循环，读取数据并保存 / Main loop to read data and save
+# Main loop to read and save the data
 try:
     while True:
-        # 读取加速度数据 / Read accelerometer data
+        # Reading accelerometer data
         x, y, z = motion.acceleration
-
+	
+	# Calculating total acceleration
         total_accel = accelerometer.calculate_total_acceleration(x, y, z)
 
-        # 读取距离传感器数据 / Read distance sensor data
+        # Reading distance sensor data
         distance = distance_sensor.read()
 
-        # 获取当前时间 / Get current timestamp
+        # Getting current timestamp
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        # 打印数据到控制台 / Print data to console
+        # Printing data to console and saving it into the CSV file
         file_logger.save_data(timestamp, x, y, z, total_accel, distance, 'false')
         print(f"Time: {timestamp}, X: {x}, Y: {y}, Z: {z}, "
               f"Total Accel: {total_accel:.2f}, Distance: {distance}")
 
-        # 检查阈值并记录警报 / Check thresholds and record alerts
+        # Checking thresholds and recording alerts
         alert_triggered = False
         code, alert_reason = -1, ""
 
@@ -71,24 +68,24 @@ try:
 
         if alert_triggered:
             print(f"Alert: {alert_reason}")
-            file_logger.save_alert_log(timestamp, code, alert_reason)
-            camera.capture_photo()  # 拍摄照片
+            file_logger.save_alert_log(timestamp, code, alert_reason) # Saving the data if alert is triggered
+            camera.capture_photo()  # Capturing photo if alert is triggered
             alert_times.append(datetime.now())
 
-            # 清理过期的报警记录 / Clean up expired alert records
+            # Cleaning up expired alert records
             alert_times = [t for t in alert_times if (datetime.now() - t).seconds <= TIME_WINDOW]
 
-            # 如果窗口内报警次数超过阈值，触发蜂鸣器 / Trigger buzzer if alert count exceeds threshold in window
+            # Triggering the buzzer if alert count exceeds threshold in window
             if len(alert_times) >= MAX_ALERTS_IN_WINDOW:
                 print("Buzzer Triggered!")
-                buzz.buzz_three_times()  # 蜂鸣器鸣叫三次 / Buzzer buzzes three times
+                buzz.buzz_three_times()  # Buzzering 3 times
 
-        # 等待下一次循环 / Wait for next iteration
+        # Pause before the next iteration
         time.sleep(0.5)
         
 
 finally:
-    buzz.buzzer_off()  # 关闭蜂鸣器 / Turn off the buzzer
-    GPIO.cleanup()  # 清理 GPIO 引脚设置 / Clean up GPIO pin settings
+    buzz.buzzer_off()  # Turning off the buzzer
+    GPIO.cleanup()  # Cleaning up GPIO
 
 

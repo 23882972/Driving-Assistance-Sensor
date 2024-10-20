@@ -2,20 +2,22 @@ from picamera2 import Picamera2
 from datetime import datetime
 import os
 
+# Class for the camera usage
 class CameraModule:
+    # Initializing an object
     def __init__(self, folder="/home/csseiot/final/Driving-Assistance-Sensor/photos"):
         self.folder = folder
-        os.makedirs(self.folder, exist_ok=True)  # 创建存储文件夹（如不存在）/ Create storage folder if it doesn't exist
-        self.camera = Picamera2()  # 初始化摄像头 / Initialize the camera
+        os.makedirs(self.folder, exist_ok=True)  # Creating storage folder if it doesn't exist
+        self.camera = Picamera2()  # Initializing the camera
         self.camera.start()
 
+    # Capturing a photo and saving it to the local folder with a timestamp name"
     def capture_photo(self):
-        """拍摄照片并以时间戳命名保存到本地文件夹 / Capture a photo and save it to the local folder with a timestamp name"""
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         photo_path = os.path.join(self.folder, f"{timestamp}.jpg")
         self.camera.capture_file(photo_path)
         print(f"Photo saved: {photo_path}")
 
+    # Switching off
     def close(self):
-        """关闭摄像头"""
         self.camera.stop()
